@@ -1,81 +1,103 @@
-{"site": {
-    "garage_door": {
-        "type": "container",
-        "contents": {
-            "button": {
-                "title": "Open/Close Garage Door",
-                "on_click": "PulseOn()",
-                "hardware_identifier": "garage_door|outputs|opener_switch"
-            },
-            "status_indicator": {
-                "title": "Garage Door is "
-                "is_on": {
-                    "hardware_identifier": "garage_door|inputs|is_open",
-                    "color": "red",
-                    "title": "open"
+{
+    "site": {
+        "garage_door": {
+            "mockIO": "True",
+            "type": "container",
+            "contents": {
+                "button": {
+                    "title": "Open/Close Garage Door",
+                    "on_click": "PulseOn()",
+                    "hardware_identifier": "garage_door|outputs|opener_switch"
                 },
-                "is_off": {
-                    "hardware_identifier": "garage_door|inputs|is_closed",
-                    "color": "green",
-                    "title": "closed"
+                "status_indicator": {
+                    "title": "Garage Door is ",
+                    "is_on": {
+                        "hardware_identifier": "garage_door|inputs|is_open",
+                        "color": "red",
+                        "title": "open"
+                    },
+                    "is_off": {
+                        "hardware_identifier": "garage_door|inputs|is_closed",
+                        "color": "green",
+                        "title": "closed"
+                    }
+                },
+                "text": {
+                    "value": "since {{lastTimestamp}}."
                 }
-            },
-            "text": {
-                "value": "since {{lastTimestamp}}."
             }
-    },
-    "raspberry_pi_power_off": {
-        "_comment": "There is both a physical and software power-down switch. This controls the software version, calling the power-down subroutine, but does not actually interact with the hardware at all."
-        "type": "container",
-        "contents": {
-            "button": {
-                "title": "Push to power down computer",
-                "on_click": "PowerDown()",
+        },
+        "raspberry_pi_power_off": {
+            "_comment": "There is both a physical and software power-down switch. This controls the software version, calling the power-down subroutine, but does not actually interact with the hardware at all.",
+            "type": "container",
+            "contents": {
+                "button": {
+                    "title": "Push to power down computer",
+                    "on_click": "PowerDown()"
+                }
+            }
+        },
+        "man_door": {
+            "type": "container",
+            "contents": {
+                "status_indicator": {
+                    "title": "Man Door is ",
+                    "is_on": {
+                        "hardware_identifier": "garage_door|inputs|is_open",
+                        "color": "red",
+                        "title": "open"
+                    },
+                    "is_off": {
+                        "hardware_identifier": "garage_door|inputs|is_closed",
+                        "color": "green",
+                        "title": "closed"
+                    }
+                },
+                "text": {
+                    "value": "since {{lastTimestamp}}."
+                }
             }
         }
     },
-    "man_door": {
-        "type": "container",
-        "contents": {
+
+    "hardware":{
+        "garage_door": {
+            "title": "Garage Door",
+            "inputs": {
+                    "is_open": {
+                        "pin": 1,
+                        "type": "input_digital"
+                    },
+                "is_closed": {
+                        "pin": 2,
+                        "type": "input_digital"
+                    }
+                },
+                "outputs": {
+                    "opener_switch": {
+                        "pin": 1,
+                        "type": "output_relay"
+                    }
+                }
+        },
+        "raspberry_pi_power_off": {
+            "_comment": "There is both a physical and software version of the power-down switch. This is the physical version, connected to an input pin. It does not actually interact with the website at all.",
+            "inputs": {
+                "power_off_momentary_switch": {
+                    "pin": 3,
+                    "type": "input_digital"
+                }
+            }
+        },
+        "man_door": {
+            "title": "Side Door",
+            "inputs": {
+                "is_closed": {
+                    "title": "TODO: Only 3 Digital_Inputs. Can this be wired to an Analog input instead?",
+                    "pin": 4,
+                    "type": "input_digital"
+                }
+            }
         }
     }
-},
-
-{"hardware":{
-    "garage_door": {
-        "title": "Garage Door",
-	"inputs": {
-            "is_open": {
-                "pin": 1,
-                "type": "input_digital"
-            },
-	    "is_closed": {
-                "pin": 2,
-                "type": "input_digital"
-            }
-        },
-        "outputs": {
-            "opener_switch": {
-                "pin": 1,
-                "type": "output_relay"
-            },
-        },
-    "raspberry_pi_power_off": {
-        "_comment": "There is both a physical and software version of the power-down switch. This is the physical version, connected to an input pin. It does not actually interact with the website at all."
-        "inputs": {
-            "power_off_momentary_switch": {
-                "pin": 3,
-                "type": "input_digital"
-            }
-        }
-},
-{"man_door": {
-        "title": "Side Door",
-        "inputs": {
-            "is_closed": {
-                "title": "TODO: Only 3 Digital_Inputs. Can this be wired to an Analog input instead?",
-                "pin": 4,
-                "type": "input_digital"
-            },
-        }
-} 
+}

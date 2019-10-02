@@ -30,20 +30,21 @@ class Control_Relay(object):
 
     def Pulse_off(self, time_seconds):
         self.Off()
-        time.sleetp(time_seconds)
+        time.sleep(time_seconds)
         self.On()
         self.last_action = "PULSE_OFF"
         self.last_action_timestamp = datetime.datetime.now()
 
-    def IsOn(self)
-        return automationhat.relay[self.pin].is_on() == True
+    def IsOn(self):
         self.last_action = "IS_ON"
         self.last_action_timestamp = datetime.datetime.now()
-
-    def IsOff(self)
-        return automationhat.relay[self.pin].is_off() == True
+        return automationhat.relay[self.pin].is_on() == True
+        
+    def IsOff(self):
         self.last_action = "IS_OFF"
         self.last_action_timestamp = datetime.datetime.now()
+        return automationhat.relay[self.pin].is_off() == True
+        
 
 
 

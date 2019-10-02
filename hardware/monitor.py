@@ -1,40 +1,57 @@
-import os
-import time
 import json
-import automationhat
+import MockIo
+# import control_digital_input
+# import control_digital_output
+# import control_relay
 
-scriptDirectory = os.path.dirname(os.path.abspath('__file__'))
-print scriptDirectory
+# This monitor specifically uses the RaspberryPi Zero W, with a Pimoroni AutomationPhat.
+# It contains 3 digital inputs, 3 digital outputs, a relay and analog inputs.
 
-with open(os.path.join(scriptDirectory, 'config.json')) as json_file:
-	config = json.load(json_file)
-	print('limit_switch_up = Input:', config['garage']['limit_switch_up'])
-	print('limit_switch_down = Input:', config['garage']['limit_switch_down'])
-	print('push_button_opener = Output:', config['garage']['push_button_opener'])
-
-	limit_switch_up = config['garage']['limit_switch_up']-1
-	limit_switch_down = config['garage']['limit_switch_down']-1
-	push_button_opener = config['garage']['push_button_opener']-1
-
-	if limit_switch_up < 0 or limit_switch_up > 2:
-		raise Exception('Upper Limit Switch is not configured properly. Pin Number must be between 1 and 3. Set to ', limit_switch_up)
-
-	if limit_switch_down < 0 or limit_switch_down > 2:
-		raise Exception('Lower Limit Switch is not configured properly. Pin Number must be between 1 and 3. Set to ', limit_switch_up)
-
-	if push_button_opener < 0 or push_button_opener > 2:
-		raise Exception('Open push button is not configured properly. Pin Number must be between 1 and 3. Set to ', limit_switch_up)
-
-	if limit_switch_up == limit_switch_down:
-		raise Exception('Upper and Lower Limit Switchs are not configured properly. Pin Number must be different. Set to ', limit_switch_up, ',', limit_switch_down)
-
-
-
-while True:
-	isUp = automationhat.input[limit_switch_up].read()
-	isDown = automationhat.input[limit_switch_down].read()
+class Monitor(object):
 	
+	def __init__(self, config, identifier):
+		self.mock = config["mockIO"] == 'True'
+		self.controls = dict
+		for io_node in config["hardware"][identifier]["inputs"]:
+			self.controls[io_node["id"]] = self.generate_control(input_node)
 
 
-	print(isUp,isDown)
-	time.sleep(1)
+	def Run(self):
+		print("RUNNING")
+		
+
+	# def State(self):
+	# 	for control in self.controls:
+	# 		state[control.id] = control.IsOn()
+	# 	return state
+
+
+	def generate_control(self, io_node, mock):
+		if mock == True:
+			return mockIo(io_node["id"], io_node)	
+
+		if io_node["type"] == "input_digital":
+			return control_digital_input(io_node["id"], io_node)
+		elif io_node["type"] == "input_analog":
+			raise Exception('input_analog control type has not been implemented yet.')
+		elif io_node["type"] == "output_digital":
+			return control_digital_output(io_node["id"], io_node)
+		elif io_node["type"] == "output_relay":
+			return control_relay(io_node["id"], io_node)
+		else:
+			raise Exception('Control type was not recognized:' + io_node["type"])
+
+
+
+	# def validate_configuration(config)
+		
+
+	# while True:
+	# 	isUp = automationhat.input[limit_switch_up].read()
+	# 	isDown = automationhat.input[limit_switch_down].read()
+		
+
+
+	# 	print(isUp,isDown)
+	# 	time.sleep(1)
+
