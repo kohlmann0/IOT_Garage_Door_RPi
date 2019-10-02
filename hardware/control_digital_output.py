@@ -1,6 +1,10 @@
-import automationhat
 import time
 import datetime
+try:
+    import automationhat
+except ImportError:
+    import mockIO
+    #print("Failed to load AutomationHat, using MockIO")
 
 class Control_Digital_Output(object):
 
