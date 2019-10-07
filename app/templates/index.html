@@ -29,4 +29,6 @@
         <div>garage_door.is_closed = {{ monitors["garage_door"].controls["is_closed"].IsOn() }}</div>        
         <div>garage_door.opener_switch = {{ monitors["garage_door"].controls["opener_switch"].IsOn() }}</div>
     {% endif %}
+
+    <button name="powerBtn" onclick="push_power_button()">Power Off</button>
 {% endblock %}

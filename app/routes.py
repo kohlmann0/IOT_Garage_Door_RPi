@@ -4,6 +4,7 @@ from app import app
 import json
 import time
 import datetime
+import subprocess
 
 # Hardware setup
 import hardware.monitor as H
@@ -32,3 +33,7 @@ def index():
 
 def push_closer_button():
     monitors["garage_door"].controls["opener_switch"].Pulse_On(1)
+
+def push_power_button():
+    subprocess.call(['shutdown', '-h', 'now'], shell=False)
+    
