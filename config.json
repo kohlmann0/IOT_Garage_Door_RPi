@@ -1,7 +1,6 @@
 {
     "site": {
         "garage_door": {
-            "mockIO": "True",
             "type": "container",
             "contents": {
                 "button": {
@@ -63,41 +62,47 @@
     "hardware":{
         "garage_door": {
             "title": "Garage Door",
-            "inputs": {
-                    "is_open": {
-                        "pin": 1,
-                        "type": "input_digital"
-                    },
-                "is_closed": {
-                        "pin": 2,
-                        "type": "input_digital"
-                    }
+            "inputs": [
+                {
+                    "id": "is_open",
+                    "pin": 1,
+                    "type": "input_digital"
                 },
-                "outputs": {
-                    "opener_switch": {
-                        "pin": 1,
-                        "type": "output_relay"
-                    }
+                {
+                    "id": "is_closed",
+                    "pin": 2,
+                    "type": "input_digital"
                 }
+            ],
+            "outputs": [                
+                {
+                    "id": "opener_switch",
+                    "pin": 1,
+                    "type": "output_relay"
+                }
+            ]            
         },
         "raspberry_pi_power_off": {
+            "title": "Power Off Raspberry Pi",
             "_comment": "There is both a physical and software version of the power-down switch. This is the physical version, connected to an input pin. It does not actually interact with the website at all.",
-            "inputs": {
-                "power_off_momentary_switch": {
+            "inputs": [
+                {
+                    "id": "button_pressed",
                     "pin": 3,
                     "type": "input_digital"
                 }
-            }
+            ]
         },
         "man_door": {
             "title": "Side Door",
-            "inputs": {
-                "is_closed": {
-                    "title": "TODO: Only 3 Digital_Inputs. Can this be wired to an Analog input instead?",
-                    "pin": 4,
+            "_comment": "TODO: Unfortunately, I don't have an extra input for this. Will have to figure something out in the future. Possibly change the power-down pin, or use one of the analog inputs for this.",
+            "inputs": [
+                {
+                    "id": "is_closed",
+                    "pin": "unknown",
                     "type": "input_digital"
                 }
-            }
+            ]
         }
     }
 }

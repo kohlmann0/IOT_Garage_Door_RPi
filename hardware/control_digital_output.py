@@ -1,10 +1,18 @@
 import time
 import datetime
+
+# 1. If on the raspberry Pi use the actual AutomationHat Library and hardware
+# 2. If using Python3, try using the MockIO Import
+# 3. If using Python2, try using the same thing, but with a relative path.
+# https://stackoverflow.com/questions/43728431/relative-imports-modulenotfounderror-no-module-named-x
 try:
     import automationhat
 except ImportError:
-    import mockIO
-    #print("Failed to load AutomationHat, using MockIO")
+    # TODO: log that we couldn't find the hardware and are instead using the MockIO
+	try:
+		from MockIo import automationhat
+	except ImportError:
+		from .MockIo import automationhat
 
 class Control_Digital_Output(object):
 
