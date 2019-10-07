@@ -5,7 +5,7 @@
             "contents": {
                 "button": {
                     "title": "Open/Close Garage Door",
-                    "on_click": "PulseOn()",
+                    "on_click": "Pulse_On()",
                     "hardware_identifier": "garage_door|outputs|opener_switch"
                 },
                 "status_indicator": {

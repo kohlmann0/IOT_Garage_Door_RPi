@@ -14,7 +14,9 @@ except ImportError:
 	try:
 		from MockIo import automationhat
 	except ImportError:
-		from .MockIo import automationhat
+		# from .MockIo import MockIO as automationhat
+		import hardware.MockIo as automationhat
+		# raise Exception("What the Fuck!")
 
 
 # This monitor specifically uses the RaspberryPi Zero W, with a Pimoroni AutomationPhat.
@@ -32,11 +34,6 @@ class Monitor(object):
 			for io_node in config["hardware"][identifier]["outputs"]:
 				self.controls[io_node["id"]] = self.generate_control(io_node)
 
-
-	def Run(self):
-		print("RUNNING")
-		
-
 	def generate_control(self, io_node):
 		if io_node["type"] == "input_digital":
 			return Control_Digital_Input(io_node["id"], io_node)
@@ -48,6 +45,16 @@ class Monitor(object):
 			return Control_Relay(io_node["id"], io_node)
 		else:
 			raise Exception('Control type was not recognized:' + io_node["type"])
+
+	# @property
+	# def Controls(self):
+	# 	return self.controls	
+
+	def Run(self):
+		print("RUNNING")
+		print("State:")
+		for control in self.controls:
+			print(self.controls[control].IsOn())
 
 
 
@@ -74,7 +81,7 @@ class Control_Digital_Input(object):
 
 	def Validate_Configuration(self):
 		if self.pin < 0 or self.pin > 2:
-			raise Exception('The digital input for ' + self.title + ' is misconfigured (pin number = ' + (self.pin + 1) + '). Pin Number must be between 1 and 3.')
+			raise Exception('The digital input for ' + self.id + ' is misconfigured (pin number = ' + (self.pin + 1) + '). Pin Number must be between 1 and 3.')
 
 
 
@@ -125,7 +132,7 @@ class Control_Digital_Output(object):
 
     def _validate_Configuration(self):
         if self.pin < 0 or self.pin > 2:
-            raise Exception('The digital output for ' + self.title + ' is misconfigured (pin number = ' + (self.pin + 1) + '). Pin Number must be between 1 and 3.')
+            raise Exception('The digital output for ' + self.id + ' is misconfigured (pin number = ' + (self.pin + 1) + '). Pin Number must be between 1 and 3.')
 
 
 

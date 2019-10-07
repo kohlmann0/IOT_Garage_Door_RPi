@@ -1,0 +1,32 @@
+{% extends "baseTemplate.html" %}
+
+{% block content %}
+    <h1>Hello, {{ user.username }}!</h1>
+    {% if (monitors["garage_door"].controls["is_open"].IsOn() == True and monitors["garage_door"].controls["is_closed"].IsOn() == True) %}
+        <div>Error: Something is wrong with the wiring is_open = {{ monitors["garage_door"].controls["is_open"].IsOn() }}, is_closed = {{monitors["garage_door"].controls["is_closed"].IsOn() }}</div>
+    {% elif (monitors["garage_door"].controls["is_open"].IsOn() == False and monitors["garage_door"].controls["is_open"].IsOn() == False) %}
+        <div>Garage door is half open</div>
+    {% else %}
+        <div>Garage door is {% if monitors["garage_door"].controls["is_open"].IsOn() == True and monitors["garage_door"].controls["is_closed"].IsOff() == True %} Open {% else %} Closed {% endif %}</div>
+    {% endif %}
+
+    <div>
+        <button name="closerBtn" onclick="push_closer_button()">
+            {% if (monitors["garage_door"].controls["is_open"].IsOn() == True and monitors["garage_door"].controls["is_closed"].IsOn() == True) %}
+                <!-- Something is wrong, do not display the button -->
+            {% elif (monitors["garage_door"].controls["is_open"].IsOn() == True and monitors["garage_door"].controls["is_closed"].IsOn() == False) %}
+                <div>Push To Close</div>
+            {% elif (monitors["garage_door"].controls["is_open"].IsOn() == False and monitors["garage_door"].controls["is_closed"].IsOn() == True) %}
+                <div>Push To Open</div>            
+            {% else %}
+            <div>Push To Activate</div>
+            {% endif %}        
+        </button>
+    </div>
+
+    {% if debug == True %}
+        <div>garage_door.is_open = {{ monitors["garage_door"].controls["is_open"].IsOn() }}</div>
+        <div>garage_door.is_closed = {{ monitors["garage_door"].controls["is_closed"].IsOn() }}</div>        
+        <div>garage_door.opener_switch = {{ monitors["garage_door"].controls["opener_switch"].IsOn() }}</div>
+    {% endif %}
+{% endblock %}
