@@ -9,14 +9,17 @@ import collections
 # https://stackoverflow.com/questions/43728431/relative-imports-modulenotfounderror-no-module-named-x
 try:
     import automationhat
+    print("Real Hardware Loaded")
 except ImportError:
     # TODO: log that we couldn't find the hardware and are instead using the MockIO
 	try:
 		from MockIo import automationhat
+		print("MockIo1 Loaded")
 	except ImportError:
 		# from .MockIo import MockIO as automationhat
 		import hardware.MockIo as automationhat
-		# raise Exception("What the Fuck!")
+		print("MockIo2 Loaded")
+
 
 
 # This monitor specifically uses the RaspberryPi Zero W, with a Pimoroni AutomationPhat.
@@ -46,9 +49,6 @@ class Monitor(object):
 		else:
 			raise Exception('Control type was not recognized:' + io_node["type"])
 
-	# @property
-	# def Controls(self):
-	# 	return self.controls	
 
 	def Run(self):
 		print("RUNNING")
@@ -60,7 +60,7 @@ class Monitor(object):
 
 class Control_Digital_Input(object):
 
-	def __init__(self, control_id, config):        
+	def __init__(self, control_id, config):
 		self.id = control_id
 		self.pin = config["pin"] - 1
 		self.last_action = "INIT"
@@ -71,13 +71,13 @@ class Control_Digital_Input(object):
 		self.last_action = "IS_ON"
 		self.last_action_timestamp = datetime.datetime.now()
 		return automationhat.input[self.pin].is_on() == True
-		
+
 
 	def IsOff(self):
 		self.last_action = "IS_OFF"
 		self.last_action_timestamp = datetime.datetime.now()
 		return automationhat.input[self.pin].is_off() == True
-		
+
 
 	def Validate_Configuration(self):
 		if self.pin < 0 or self.pin > 2:
@@ -123,7 +123,7 @@ class Control_Digital_Output(object):
         self.last_action = "IS_ON"
         self.last_action_timestamp = datetime.datetime.now()
         return automationhat.output[self.pin].is_on() == True
-        
+
     def IsOff(self):
         self.last_action = "IS_OFF"
         self.last_action_timestamp = datetime.datetime.now()
@@ -172,11 +172,11 @@ class Control_Relay(object):
         self.last_action = "IS_ON"
         self.last_action_timestamp = datetime.datetime.now()
         return automationhat.relay[self.pin].is_on() == True
-        
+
     def IsOff(self):
         self.last_action = "IS_OFF"
         self.last_action_timestamp = datetime.datetime.now()
         return automationhat.relay[self.pin].is_off() == True
-        
+
 
 
