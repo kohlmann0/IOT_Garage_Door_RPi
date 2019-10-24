@@ -3,38 +3,42 @@
 
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='component_styles.css') }}">
-    <h1>Hello, {{ user.username }}!</h1>
-    <div class="control_container">
-    <div>
-    {% if (monitors["garage_door"].controls["is_open"].IsOn() == True and monitors["garage_door"].controls["is_closed"].IsOn() == True) %}
-        {% set garageDoorState="error" %}
-        {% set garageDoorLabel="Error: Both limit switches are ON." %}
-	{% set debug = True %}
-    {% elif (monitors["garage_door"].controls["is_open"].IsOn() == False and monitors["garage_door"].controls["is_open"].IsOn() == False) %}
-        {% set garageDoorState="unknown" %}
-        {% set garageDoorLabel="Garage door is partially open" %}
-    {% elif monitors["garage_door"].controls["is_closed"].IsOn() == True %}
-        {% set garageDoorState="on" %}
-        {% set garageDoorLabel="Garage door is closed" %}
-    {% elif monitors["garage_door"].controls["is_open"].IsOn() == True %}
+    <div class="row">
+        <div class="twelve columns">
+            <h1>Hello, {{ user.username }}!</h1>
+        </div>
+    </div>
+    <div class="hardware_control_container row">
+    {%- if (monitors["garage_door"].controls["is_open"].IsOn() == True and monitors["garage_door"].controls["is_closed"].IsOn() == True) -%}
+        <div class="row"><div class="twelve columns">Something went serious wrong. This should NEVER get hit.</div></div>
+	{%- set debug = True -%}
+    {%- elif (monitors["garage_door"].controls["is_open"].IsOn() == False and monitors["garage_door"].controls["is_open"].IsOn() == False) -%}
+        {%- set garageDoorState="unknown" -%}
+        {%- set garageDoorLabel="Garage door is partially open. Push to activate" -%}
+    {%- elif monitors["garage_door"].controls["is_closed"].IsOn() == True -%}
+        {%- set garageDoorState="on" -%}
+        {%- set garageDoorLabel="Garage door is closed. Push to Open" -%}
+    {%- elif monitors["garage_door"].controls["is_open"].IsOn() == True -%}
         {% set garageDoorState="off" %}
-        {% set garageDoorLabel="Garage door is open" %}
+        {% set garageDoorLabel="Garage door is open. Push to Close" %}
     {% else %}
-        <div>Something went serious wrong. This should NEVER get hit.</div>
+        <div class="row"><div class="twelve columns">Something went serious wrong. This should NEVER get hit.</div></div>
+	{%- set debug = True -%}
     {% endif %}
-    {{ comp.hardware_status_indicator(id="garageDoorStatus", state=garageDoorState, label=garageDoorLabel) }}
-    </div>
-    <div>
-        {{ comp.hardware_control(id="closerBtn", action="push_closer_button()", state="off", label="Push to Activate!") }}
-    </div>
-    </div> <!-- control_container -->
+    {{ comp.hardware_status_indicator(id="garageDoorStatus", state=garageDoorState, label="", cssClassFlags="three columns fa fa-exclamation fa-5x") }}
+    {{ comp.hardware_control(id="closerBtn", action="push_closer_button()", state="off", label=garageDoorLabel, cssClassFlags="nine columns") }}
+    </div> <!-- Row -->
 
     <!-- Debug Info -->
     {% if debug == True %}
+    <div class="row">
         <div>garage_door.is_open = {{ monitors["garage_door"].controls["is_open"].IsOn() }}</div>
         <div>garage_door.is_closed = {{ monitors["garage_door"].controls["is_closed"].IsOn() }}</div>        
         <div>garage_door.opener_switch = {{ monitors["garage_door"].controls["opener_switch"].IsOn() }}</div>
+    </div>
     {% endif %}
+    <div class="row">
+        <button name="powerBtn" onclick="push_power_button()">Power Off</button>
+    </div>
 
-    <button name="powerBtn" onclick="push_power_button()">Power Off</button>
 {% endblock %}

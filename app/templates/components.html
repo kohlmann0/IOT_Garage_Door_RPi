@@ -1,8 +1,8 @@
-{% macro hardware_status_indicator(id, state="off", label="") -%}
-<label for="{{ id }}"><div id="{{ id }}" class="hardware_status_indicator_{{ state }}" >{{ label }}</div></label>
+{% macro hardware_status_indicator(id, state="off", label="", cssClassFlags="") -%}
+<div id="{{ id }}" class="hardware_status_indicator_{{ state }} {{ cssClassFlags }}" >{{ label }}</div>
 {%- endmacro %}
 
-{% macro hardware_control(id, action, state="off", label="") -%}
-<label for="{{ id }}"><button id="{{ id }}" class="hardware_control_{{ state }}" onclick="{{ action }}">{{ label }}</button></label>
+{% macro hardware_control(id, action, state="off", label="", cssClassFlags="") -%}
+<button id="{{ id }}" class="hardware_control_{{ state }} {{ cssClassFlags }}" onclick="{{ action }}">{{ label }}</button>
 {%- endmacro %}
 
