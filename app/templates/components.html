@@ -1,0 +1,8 @@
+{% macro hardware_status_indicator(id, state="off", label="") -%}
+<label for="{{ id }}"><div id="{{ id }}" class="hardware_status_indicator_{{ state }}" >{{ label }}</div></label>
+{%- endmacro %}
+
+{% macro hardware_control(id, action, state="off", label="") -%}
+<label for="{{ id }}"><button id="{{ id }}" class="hardware_control_{{ state }}" onclick="{{ action }}">{{ label }}</button></label>
+{%- endmacro %}
+

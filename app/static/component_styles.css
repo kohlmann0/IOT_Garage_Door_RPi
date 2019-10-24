@@ -1,0 +1,23 @@
+.hardware_status_indicator_on{
+background-color: Green
+}
+
+.hardware_status_indicator_off{
+background-color: LightGray
+}
+
+.hardware_status_indicator_error{
+background-color: Tomato
+}
+
+.hardware_status_indicator_unknown{
+background-color: Orange
+}
+
+.hardware_control_on{
+background-color: Green
+}
+
+.hardware_control_off{
+background-color: LightGray
+}
