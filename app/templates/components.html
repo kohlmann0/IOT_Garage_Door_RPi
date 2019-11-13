@@ -1,8 +1,14 @@
-{% macro hardware_status_indicator(id, state="off", label="", cssClassFlags="") -%}
-<div id="{{ id }}" class="hardware_status_indicator_{{ state }} {{ cssClassFlags }}" >{{ label }}</div>
+{% macro hardware_status_indicator(id, state="unknown", cssClassFlags="", fontAwesomeIconCode="fa-question") -%}
+
+<div id="{{ id }}" class="{{ cssClassFlags }}">
+    <span class="fa-stack fa-2x">
+        <i class="fa fa-square fa-stack-2x hardware_status_indicator_{{ state }}" ></i>
+        <i class="fa fa-question fa-stack-1x fa-inverse"></i>
+    </span>
+</div>
 {%- endmacro %}
 
 {% macro hardware_control(id, action, state="off", label="", cssClassFlags="") -%}
-<button id="{{ id }}" class="hardware_control_{{ state }} {{ cssClassFlags }}" onclick="{{ action }}">{{ label }}</button>
+<a onclick="{{ action }}"><div id="{{ id }}" class="hardware_control_{{ state }} {{ cssClassFlags }}">{{ label }}</div></a>
 {%- endmacro %}
 

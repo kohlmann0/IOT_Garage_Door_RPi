@@ -5,10 +5,10 @@
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <div>
-            <div>{{ form.username.label }}: </div><div>{{ form.username(size=32) }}</div>
+            <div>{{ form.username.label -}}</div><div>{{- form.username(size=32) }}</div>
         </div>
         <div>
-            <div>{{ form.password.label }}: </div><div>{{ form.password(size=32) }}</div>
+            <div>{{ form.password.label -}}</div><div>{{- form.password(size=32) }}</div>
         </div>
         <div>
             <label for="rememberMe"><div id="rememberMe">{{ form.remember_me() }} </div><div>{{ form.remember_me.label }}</div></label>

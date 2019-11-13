@@ -1,23 +1,40 @@
 .hardware_status_indicator_on{
-background-color: Green
+color: Green;
 }
 
 .hardware_status_indicator_off{
-background-color: LightGray
+color: LightGray;
 }
 
 .hardware_status_indicator_error{
-background-color: Tomato
+color: Tomato;
 }
 
 .hardware_status_indicator_unknown{
-background-color: Orange
+color: Orange;
 }
 
+
+
 .hardware_control_on{
-background-color: Green
+background-color: Green;
 }
 
 .hardware_control_off{
-background-color: LightGray
+background-color: LightGray;
+}
+
+.hardware_control_container {
+display: flex;
+
+}
+
+
+
+#garageDoorStatus, #closerBtn{
+    display:inline-block;
+    text-align: center;
+    vertical-align:middle;
+    border-radius: .75em;
+    padding: 1em;
 }

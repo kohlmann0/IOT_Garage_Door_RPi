@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance to serve garage-door IOT monitor
+After=network.target
+
+[Service]
+User=mon
+Group=www-data
+WorkingDirectory=/home/mon/garage-door
+Environment="PATH=/home/mon/garage-door/venv/bin"
+ExecStart=/home/mon/garage-door/venv/bin/uwsgi --ini garage-door.ini
+
+[Install]
+WantedBy=multi-user.target

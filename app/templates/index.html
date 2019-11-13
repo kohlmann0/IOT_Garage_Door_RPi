@@ -3,14 +3,17 @@
 
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='component_styles.css') }}">
-    <div class="row">
-        <div class="twelve columns">
-            <h1>Hello, {{ user.username }}!</h1>
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <h1>Hello, {{ user.username }}!</h1>
+            </div>
         </div>
     </div>
+    <div class="container">
     <div class="hardware_control_container row">
     {%- if (monitors["garage_door"].controls["is_open"].IsOn() == True and monitors["garage_door"].controls["is_closed"].IsOn() == True) -%}
-        <div class="row"><div class="twelve columns">Something went serious wrong. This should NEVER get hit.</div></div>
+        <div class="twelve columns">Something went serious wrong. This should NEVER get hit.</div>
 	{%- set debug = True -%}
     {%- elif (monitors["garage_door"].controls["is_open"].IsOn() == False and monitors["garage_door"].controls["is_open"].IsOn() == False) -%}
         {%- set garageDoorState="unknown" -%}
@@ -22,12 +25,15 @@
         {% set garageDoorState="off" %}
         {% set garageDoorLabel="Garage door is open. Push to Close" %}
     {% else %}
-        <div class="row"><div class="twelve columns">Something went serious wrong. This should NEVER get hit.</div></div>
+        <div class="twelve columns">Something went serious wrong. This should NEVER get hit.</div>
 	{%- set debug = True -%}
     {% endif %}
-    {{ comp.hardware_status_indicator(id="garageDoorStatus", state=garageDoorState, label="", cssClassFlags="three columns fa fa-exclamation fa-5x") }}
-    {{ comp.hardware_control(id="closerBtn", action="push_closer_button()", state="off", label=garageDoorLabel, cssClassFlags="nine columns") }}
+        <div class="eight columns offset-by-two">
+            {{ comp.hardware_status_indicator(id="garageDoorStatus", state=garageDoorState, cssClassFlags="") }}
+            {{ comp.hardware_control(id="closerBtn", action="push_closer_button()", state="off", label=garageDoorLabel, cssClassFlags="") }}
+        </div>
     </div> <!-- Row -->
+</div> <!-- Container -->
 
     <!-- Debug Info -->
     {% if debug == True %}

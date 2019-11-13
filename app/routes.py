@@ -1,6 +1,6 @@
 from flask import render_template
 from app import app
-from app.forms import LoginForm
+from app import forms
 
 import json
 import time
@@ -30,19 +30,23 @@ for monitor in monitors:
 def index():
     #Set this to false before you deploy
     debug = True
+    state = 'TEST'
     user = {'username': 'TEST'}
     return render_template('index.html', title='Garage Door Monitor', debug=debug, user=user, monitors=monitors)
 
+
 @app.route('/login')
 def login():
-    form = LoginForm()
+    form = forms.LoginForm()
     return render_template('login.html', title="Log In", form=form)
 
 
 #Monitor Functions
 def push_closer_button():
-    monitors["garage_door"].controls["opener_switch"].Pulse_On(1)
+#    monitors["garage_door"].controls["opener_switch"].Pulse_On(1)
+    print("Push_Closer_Button was Pressed")
+
 
 def push_power_button():
-    subprocess.call(['shutdown', '-h', 'now'], shell=False)
-
+#    subprocess.call(['shutdown', '-h', 'now'], shell=False)
+    print("Push_Power_Button was Pressed")
