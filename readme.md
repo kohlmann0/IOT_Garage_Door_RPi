@@ -1,3 +1,8 @@
+## Status: On-Hold due to time availability ## 
+-- This project is a solid start, the python/raspberry pi controls should work. The Flask/UI needs some work to add security, and general "prettyness". There is currently no progress so far on the Alexa integration.
+-- I've found the dotenv/nginx/uwsgi hosting to be a bit of a pain for fast development iterations (too many reloads for every change. I might try to redo it using just Flask, and worry about nginx hosting later)
+-- In all honesty, I might just redo the UI side from scratch, turn it into a progressive web-app and make Flask just an API. Then the UI a single page app - lessons learned.
+
 This is a monitor system for a garage door.
 It includes a hardware controller and a web portal
 
@@ -15,10 +20,10 @@ It includes a hardware controller and a web portal
 
 
 # Electrical connections #
-AutomationPi Digital Input 1 - Door up limit switch
-AutomationPi Digital Input 2 - Door down limit switch
-AutomationPi Digital Input 3 - Power down Raspberry Pi
-AutomationPi Relay Output 1 - Door closer switch
+* AutomationPi Digital Input 1 - Door up limit switch
+* AutomationPi Digital Input 2 - Door down limit switch
+* AutomationPi Digital Input 3 - Power down Raspberry Pi
+* AutomationPi Relay Output 1 - Door closer switch
 
 
 
@@ -29,3 +34,4 @@ AutomationPi Relay Output 1 - Door closer switch
 4. Website security
 5. Push-notifications to authorized users (app notifications, sms, ?)
 6. Access Logging and logview on website
+7. Alexa integration
